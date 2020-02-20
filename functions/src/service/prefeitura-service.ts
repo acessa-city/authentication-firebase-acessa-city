@@ -2,7 +2,6 @@ import admin = require('firebase-admin');
 
 
 import { CityHall } from '../models/prefeitura-model';
-import { Departaments } from '../models/generic-structure-model';
 
 
 
@@ -12,13 +11,12 @@ export const createNewCityHall = (dadosCityHall: CityHall) => {
         admin.firestore().doc(`cityhall/${dadosCityHall.id}`).set(dadosCityHall).then(() => {
             admin.firestore().doc(dadosCityHall.departaments.ref).get().then(departaments => {
                 if(departaments.exists){
-                    let dadosDepartaments: Departaments[] = departaments.data().departamentsInterns;
-
-                    dadosDepartaments.push({
-
-                    })
+                    rej('error');
+                }else {
+                    res('sucess');
                 }
             })
+
 
         }).catch(error => {
             console.error('Problemas ao tentar salvar Prefeitura');
